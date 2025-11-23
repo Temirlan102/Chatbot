@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Appointment Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="app.js" defer></script>
+    <title>Telegram Mini App - Appointments</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      #slots-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      button.booked {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      button.selected {
+        background-color: #4caf50;
+        color: white;
+      }
+    </style>
   </head>
   <body>
-    <h2>Appointment Mini App</h2>
-    <button id="loadSlots">Load Available Slots</button>
-    <ul id="slotList"></ul>
+    <h1>Book Your Appointment</h1>
+    <div id="slots-container">Loading slots...</div>
+    <script src="app.js"></script>
   </body>
 </html>
