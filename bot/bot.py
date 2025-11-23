@@ -44,7 +44,7 @@ async def miniapp(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [
             InlineKeyboardButton(
                 text="Open Mini App",
-                web_app=WebAppInfo(url="")
+                web_app=WebAppInfo(url="https://chatbot-snowy-psi.vercel.app/")
             )
         ]
     ]
