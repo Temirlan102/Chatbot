@@ -1,0 +1,23 @@
+{
+  "availableSlots": [
+    {
+      "id": 3,
+      "date": "2025-11-26",
+      "time": "11:00"
+    }
+  ],
+  "bookedSlots": [
+    {
+      "id": 2,
+      "date": "2025-11-25",
+      "time": "14:00",
+      "user": "Temiryyyk"
+    },
+    {
+      "id": 1,
+      "date": "2025-11-25",
+      "time": "10:00",
+      "user": "Temiryyyk"
+    }
+  ]
+}
