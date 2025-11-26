@@ -1,10 +1,9 @@
 {
-  "availableSlots": [
-    { "id": 1, "date": "Monday", "time": "14:00" },
-    { "id": 2, "date": "Tuesday", "time": "15:00" },
-    { "id": 3, "date": "Wednesday", "time": "11:30" },
-    { "id": 4, "date": "Thursday", "time": "12:00" },
-    { "id": 5, "date": "Friday", "time": "14:30" }
-  ],
-  "bookedSlots": []
+  "slots": [
+    { "id": 1, "date": "Monday", "time": "14:00", "user": null },
+    { "id": 2, "date": "Tuesday", "time": "15:00", "user": null },
+    { "id": 3, "date": "Wednesday", "time": "11:30", "user": null },
+    { "id": 4, "date": "Thursday", "time": "12:00", "user": null },
+    { "id": 5, "date": "Friday", "time": "14:30", "user": null }
+  ]
 }
