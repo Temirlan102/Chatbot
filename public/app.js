@@ -1,17 +1,15 @@
 const tg = window.Telegram.WebApp;
-tg.ready(); // initialize Telegram Web App
+tg.ready();
 
-let userId = tg.initDataUnsafe.user.id; // Telegram user ID
-let slots = []; // store slots from backend
+let userId = tg.initDataUnsafe.user.id;
+let slots = [];
 let bookedSlotId = null;
 
-// Fetch available slots and update UI
 async function loadSlots() {
   try {
     const res = await fetch("https://chatbot-snowy-psi.vercel.app/api/slots");
     slots = await res.json();
 
-    // Get user’s booked slot
     const userRes = await fetch(
       `https://chatbot-snowy-psi.vercel.app/api/myappointment?user=${userId}`
     );
@@ -42,7 +40,6 @@ async function loadSlots() {
   }
 }
 
-// Book a slot
 async function bookSlot(slotId) {
   try {
     const res = await fetch("https://chatbot-snowy-psi.vercel.app/api/book", {
@@ -58,12 +55,11 @@ async function bookSlot(slotId) {
       alert(`❌ ${data.error}`);
     }
 
-    loadSlots(); // refresh UI
+    loadSlots();
   } catch (err) {
     console.error(err);
     alert("Failed to book slot");
   }
 }
 
-// Initialize
 window.onload = loadSlots;
