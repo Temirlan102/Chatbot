@@ -1,6 +1,7 @@
 import logging
+import requests
 from telegram import (
-    Update, InlineKeyboardButton, InlineKeyboardMarkup, 
+    Update, InlineKeyboardButton, InlineKeyboardMarkup,
     WebAppInfo
 )
 from telegram.ext import (
@@ -10,8 +11,11 @@ from telegram.ext import (
 
 logging.basicConfig(level=logging.INFO)
 
-appointments = {}   
+appointments = {}
+
 available_dates = ["Monday 14:00", "Tuesday 15:00", "Wednesday 11:30", "Thursday 12:00", "Friday 14:30"]
+
+BACKEND_URL = "https://chatbot-snowy-psi.vercel.app/api"
 
 STICKER_SUCCESS = "CAACAgUAAxkBAAICgGabcdEXAMPLE"
 STICKER_CANCEL = "CAACAgUAAxkBAAICgWaabcdEXAMPLE"
@@ -50,7 +54,7 @@ async def miniapp(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
 
     await update.message.reply_text(
-        " Open the Mini App below:",
+        "Open the Mini App below:",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
@@ -62,7 +66,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/book – Book an appointment\n"
         "/view – View your appointment\n"
         "/edit – Change your appointment\n"
-        "/miniapp - Open Web App to see appointment\n"
+        "/miniapp – Open Web App to see appointment\n"
         "/cancel – Cancel your appointment\n",
         parse_mode="Markdown"
     )
@@ -111,12 +115,29 @@ async def on_date_selected(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     user_id = query.message.chat_id
     selected_date = query.data.replace("DATE_", "")
+    date_part, time_part = selected_date.split()    
 
-    if selected_date in appointments.values() and appointments.get(user_id) != selected_date:
-        await query.edit_message_text(
-            f"😔 Sorry, *{selected_date}* is already booked by someone else.",
-            parse_mode="Markdown"
-        )
+    try:
+        backend_slots = requests.get(f"{BACKEND_URL}/slots").json()
+    except:
+        await query.edit_message_text("❌ Backend unavailable.")
+        return
+
+    slot = next((s for s in backend_slots if s["date"] == date_part and s["time"] == time_part), None)
+
+    if not slot:
+        await query.edit_message_text(f"❌ Slot *{selected_date}* not found.", parse_mode="Markdown")
+        return
+
+    slot_id = slot["id"]
+
+    response = requests.post(
+        f"{BACKEND_URL}/book",
+        json={"slotId": slot_id, "user": user_id}
+    )
+
+    if response.status_code != 200:
+        await query.edit_message_text(f"❌ {response.json().get('error', 'Booking failed')}")
         return
 
     appointments[user_id] = selected_date
@@ -131,7 +152,6 @@ async def on_date_selected(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.message.reply_sticker(STICKER_SUCCESS)
     except:
         pass
-
 
 def main():
     app = Application.builder().token("8558046922:AAFaaLo109S3ompgqYK-Q3pcTaYGkCVNBbs").build()
