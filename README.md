@@ -14,6 +14,16 @@ A Telegram chatbot designed to streamline the tour booking process. This bot pro
 
 To use this chatbot, simply search for it on Telegram and start a conversation to begin booking your next tour adventure.
 
+### Available Commands
+
+- `/start` – Welcome message
+- `/help` – Show all commands
+- `/book` – Book an appointment
+- `/view` – View your appointment
+- `/edit` – Change your appointment
+- `/miniapp` – Open Web App to see appointment
+- `/cancel` – Cancel your appointment
+
 ## License
 
 This project is licensed under the MIT License.
