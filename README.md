@@ -10,10 +10,6 @@ A Telegram chatbot designed to streamline the tour booking process. This bot pro
 - **Instant Confirmation** - Automatic booking confirmation via Telegram
 - **Customer Support** - Quick access to support for booking inquiries
 
-## Getting Started
-
-To use this chatbot, simply search for it on Telegram and start a conversation to begin booking your next tour adventure.
-
 ### Available Commands
 
 - `/start` – Welcome message
